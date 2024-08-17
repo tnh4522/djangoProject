@@ -1,7 +1,8 @@
 from datetime import date
-
+from rest_framework import generics
 from django.views.generic import ListView
-from .models import ToDoItem
+from .models import ToDoItem, Product
+from .serializers import ProductSerializer
 
 
 class AllToDos(ListView):
@@ -18,3 +19,8 @@ class TodayToDos(ListView):
 
     def get_queryset(self):
         return ToDoItem.objects.filter(due_date=date.today())
+
+
+class ProductListAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
